@@ -1,17 +1,46 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { ShoppingCart, AlertCircle, CheckCircle } from "lucide-react"
+import { Metric } from "../api/orders";
+import { useEffect, useState } from "react";
 
-interface EventData {
-  name: string
-  count: number
-  trend: number
-}
 
-export default function CustomEvents({ events }: { events: EventData[] }) {
+
+export default function CustomEvents() {
+
+  const [CartAbandoned, setCartAbandoned] = useState(0);
+  const [CheckoutStarted, setCheckoutStarted] = useState(0);
+  const [PurchaseCompleted, setPurchaseCompleted] = useState(0);
+
+  const Datametric = async ()=>{
+    try{
+       const tokenData = localStorage.getItem("token");
+            if (!tokenData) {
+                console.error("No token found");
+                return;
+            }
+
+            const token = JSON.parse(tokenData);
+            const tokenString = token.token || token.access_token || JSON.stringify(token);
+
+        const response = await Metric(tokenString);
+        console.log("Custom Events Data:", response);
+
+        setCartAbandoned(response.metrics.cartAbandoned || 0);
+        setCheckoutStarted(response.metrics.checkoutStarted || 0);
+        setPurchaseCompleted(response.metrics.purchaseCompleted || 0);
+    }catch(error){
+        console.error("Error fetching custom events data:", error);
+    }
+  } 
+
+  useEffect(() => {
+    Datametric();
+  }, []);
+
   const eventTypes = [
-    { icon: ShoppingCart, label: "Cart Abandoned", color: "#f59e0b", data: 24 },
-    { icon: AlertCircle, label: "Checkout Started", color: "#06b6d4", data: 18 },
-    { icon: CheckCircle, label: "Purchase Completed", color: "#10b981", data: 32 },
+    { icon: ShoppingCart, label: "Cart Abandoned", color: "#f59e0b", data: CartAbandoned },
+    { icon: AlertCircle, label: "Checkout Started", color: "#06b6d4", data: CheckoutStarted },
+    { icon: CheckCircle, label: "Purchase Completed", color: "#10b981", data: PurchaseCompleted },
   ]
 
   const chartData = Array.from({ length: 7 }, (_, i) => {
@@ -25,7 +54,7 @@ export default function CustomEvents({ events }: { events: EventData[] }) {
   })
 
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-6">
+    <div className="bg-linear-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-6">
       <h2 className="text-xl font-bold text-white mb-6">Custom Events</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
