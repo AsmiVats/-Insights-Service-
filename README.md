@@ -5,7 +5,7 @@ A full-stack system that ingests Shopify store data (customers, orders, products
 This project simulates how Xeno onboards enterprise retailers and provides actionable analytics.
 
 ---
-## 🏗️ **High-Level Architecture**
+##  **High-Level Architecture**
 
 ```
            Shopify API
@@ -22,6 +22,8 @@ This project simulates how Xeno onboards enterprise retailers and provides actio
                 ▼
         React Insights Dashboard
 ```
+<img width="931" height="373" alt="image" src="https://github.com/user-attachments/assets/09be3158-084a-435e-8d1e-39e90832a49c" />
+
 
 ---
 ## 🛠️ **Tech Stack**
