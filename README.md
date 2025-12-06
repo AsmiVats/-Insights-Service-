@@ -92,19 +92,19 @@ Each model stores `storeId` to enforce tenant isolation.
 ### **Dashboard APIs**
 
 All require `Authorization: Bearer <token>`.
+All protected `GET` routes require a JWT bearer token for authentication and are scoped to the authenticated tenant's data.
 
-| Method | Endpoint                           | Description                          |
-| ------ | ------------------------------ ----| ------------------------------------ |
-| `GET`  | `/api/orders/metrics`              | Returns core business metrics.       |
-| `GET`  | `/api/orders/rangerevenue`         | Revenue trend (with date filtering). |
-| `GET`  | `/api/orders/total-orders`         | Total orders                         |
-| `GET`  | `/api/orders/revenue`              | Total revenue                        |
-| `GET`  | `/api/customers/topcustomers`      | Top 5 customers by spend.            |
-| `GET`  | `/api/customers/topcountries`      | Top contries our customers belong to.|
-| `GET`  | `/api/customers/revenuebycustomer` | Reveue wrt customers                 |
-| `GET`  | `/api/products/outofstock`         | Products that are out of stock       |
-| `GET`  | `/api/products/totalavailable`     | Total available products             |
-| `GET`  | `/api/products/topsold`            | Top sold products                    |
+| Method | Endpoint | Description | Associated Dashboard Insight |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/orders/metrics` | Returns aggregate KPIs: Total Orders, Total Revenue, Total Customers, and Average Order Value (AOV). | **KPIs Section** |
+| `GET` | `/api/orders/rangerevenue` | Analyzes order data to provide revenue and order counts over a specific date range (`startDate`, `endDate`). | **Revenue Trend Chart** |
+| `GET` | `/api/customers/topcustomers` | Fetches the top 5 customers ranked by their lifetime spend. | **Top 5 Customers by Spend** |
+| `GET` | `/api/customers/topcountries` | Aggregates customer data to identify the top countries, often used for geographical analysis charts. | **Customer Geography** |
+| `GET` | `/api/products/totalavailable` | Returns the total count of products that are currently in stock. | **Total Available Products** |
+| `GET` | `/api/products/outofstock` | Returns a list of all products (or variants) that have an inventory quantity of zero. | **Out of Stock Products List** |
+| `GET` | `/api/products/topsold` | Returns a list of the top-selling products, ranked by unit volume sold. | **Top Sold Items** |
+
+
 
 
 ### **Ingestion**
