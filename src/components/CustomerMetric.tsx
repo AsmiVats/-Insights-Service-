@@ -1,6 +1,6 @@
 
 import { Users, MapPin, Globe } from "lucide-react"
-import { use, useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 import { topcountries } from "../api/customers"
 
 interface TopCountry {
