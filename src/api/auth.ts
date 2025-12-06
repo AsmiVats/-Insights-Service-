@@ -35,3 +35,20 @@ export async function signUp(email: string, password: string, shopName: string, 
         throw error;
     }
 };
+
+
+export async function updateAll(token: string) {
+    try {
+        const res = await axios({
+            method: 'POST',
+            url: `${import.meta.env.VITE_BACKEND_URL}/auth/update`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res.data;
+    } catch (error) {
+        console.error("Update all error:", error);
+        throw error;
+    }
+};
